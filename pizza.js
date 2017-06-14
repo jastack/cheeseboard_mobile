@@ -9,7 +9,7 @@ export default class Pizza extends React.Component {
   render(){
     return(
       <View>
-        <Text>Changes you make will automatically reload.</Text>
+        <Text>{this.props.type}</Text>
       </View>
     );
   }
