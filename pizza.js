@@ -9,8 +9,16 @@ export default class Pizza extends React.Component {
   render(){
     return(
       <View>
-        <Text>{this.props.type}</Text>
+        <Text style={styles.pizza}>{this.props.type}</Text>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+
+  pizza: {
+    flex: 0,
+    margin: 20
+  }
+});

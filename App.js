@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import Pizza from './pizza.js';
 
 export default class App extends React.Component {
@@ -45,10 +45,11 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <View style={styles.container}>
-        <Text>Today's Pizza!!!</Text>
+        <Image source={require('./logo.jpeg')}
+           style={{width: 300, height: 100}}/>
+         <Text style={styles.header}>Today's Pizza!!!</Text>
         <Pizza type={this.state.pizza}/>
       </View>
     );
@@ -58,8 +59,15 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#C6F9FD',
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  header: {
+    fontWeight: 'bold',
+    marginTop: 20
+  },
+
+
 });
