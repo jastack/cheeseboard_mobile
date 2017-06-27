@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, ScrollView } from 'react-native';
 import Pizza from './pizza.js';
 
 export default class App extends React.Component {
   constructor(props){
     super(props);
-    this.state = {pizza: "Not loaded yet"};
+    this.state = {pizza: "", text: ""};
+    this.displayPizza = this.displayPizza.bind(this);
+    this.pizzaArray = this.pizzaArray.bind(this);
   }
 
   getPizza(){
@@ -18,8 +20,17 @@ export default class App extends React.Component {
     });
   }
 
+  searchPizza(text){
+    const string = text;
+    const address = 'http://cheeseboardapi.herokuapp.com/pizzas/' + string;
+    fetch(address)
+     .then(response => response.json())
+     .then(responsedata => {
+      this.setState({pizza: responsedata});
+    });
+  }
+
   componentDidMount(){
-    this.getPizza();
     const date = this.currentDate();
   }
 
@@ -44,13 +55,35 @@ export default class App extends React.Component {
     }
   }
 
+  displayPizza(){
+    if (this.state.pizza === ""){
+      return (<Text>Still loading...</Text>);
+    } else {
+      return (this.state.pizza.map(
+        pizza => <Pizza key={pizza.id} type={pizza.pizza_type} date = {pizza.date} />
+      ));
+    }
+  }
+
+  pizzaArray(text){
+    this.setState({text: text});
+    this.searchPizza(text);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Image source={require('./logo.jpeg')}
            style={{width: 300, height: 100}}/>
-         <Text style={styles.header}>Today's Pizza!!!</Text>
-        <Pizza type={this.state.pizza}/>
+         <TextInput
+          style={{height: 40}}
+          placeholder="Type ingredients here!"
+          onChangeText={(text) => this.pizzaArray(text)}
+           />
+         <Text style={styles.header}>Pizzas:</Text>
+         <ScrollView>
+           {this.displayPizza()}
+         </ScrollView>
       </View>
     );
   }

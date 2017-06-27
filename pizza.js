@@ -9,6 +9,7 @@ export default class Pizza extends React.Component {
   render(){
     return(
       <View>
+        <Text style={styles.pizza}>{this.props.date}</Text>
         <Text style={styles.pizza}>{this.props.type}</Text>
       </View>
     );
